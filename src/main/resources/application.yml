@@ -1,0 +1,42 @@
+server:
+  port: 8088
+
+
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://121.4.34.107:3306/test05?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root123
+    #连接池的配置信息
+    initialSize: 10
+    minIdle: 10
+    maxActive: 50
+    maxWait: 60000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    poolPreparedStatements: false
+  resources:
+    static-locations: classpath:/static/,classpath:/views/
+    #cache-period: 0
+
+  dubbo:
+    scan: com.example.demo.service
+    monitor:
+      protocol: registry
+    application:
+      name: demo
+    registry:
+      address: zookeeper://127.0.0.1:2181
+      timeout: 10000
+    protocol:
+      name: dubbo
+      port: 20880
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*.xml
